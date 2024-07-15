@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhyming Words Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Poetry Assistant</h2>
+    <p>Enter a word to find its rhyming words:</p>
+    <body style="background-color:antiquewhite;">
+    <input type="text" id="inputWord" placeholder="Enter a word">
+    <button onclick="handleFindRhymingWords()">Find Rhyming Words</button>
+    <div id="result"></div>
+
+    <script src="poetry-assistant.js"></script>
+    <script>
+        async function handleFindRhymingWords() {
+            const inputWord = document.getElementById('inputWord').value.trim().toLowerCase();
+            if (inputWord === '') {
+                alert('Please enter a word.');
+                return;
+            }
+
+            try {
+                const rhymingWords = await findRhymingWords(inputWord);
+                displayResult(rhymingWords);
+            } catch (error) {
+                console.error('Error finding rhyming words:', error);
+                displayResult([]);
+            }
+        }
+
+        function displayResult(rhymingWords) {
+            const resultDiv = document.getElementById('result');
+            if (rhymingWords.length === 0) {
+                resultDiv.innerHTML = '<p>No rhyming words found.</p>';
+            } else {
+                let html = '<p>Rhyming words:</p><ul>';
+                rhymingWords.forEach(word => {
+                    html += `<li>${word}</li>`;
+                });
+                html += '</ul>';
+                resultDiv.innerHTML = html;
+            }
+        }
+    </script>
+</body>
+</html>
